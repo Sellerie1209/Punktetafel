@@ -11,25 +11,25 @@
     <main class="main">
         <div class="teamA teamdisplay">
             <div class="teamname">
-                <h2>Team A</h2>
+                <h2 id="teamnamea">Team A</h2>
             </div>
             <div class="points">
-                <button id="btnteama" class="pointbtn">00</button>
+                <input type="button" value="00" id="btnteama" class="pointbtn" onclick="add(1)"></input>
             </div>
             <div class="pointsminus">
-                <button id="minusteama" class="minusbtn">-</button>
+                <input type="button" value="-" id="minusteama" class="minusbtn" onclick="subtract(1)"></input>
             </div>
         </div>
 
         <div class="teamB teamdisplay">
             <div class="teamname">
-                <h2>Team B</h2>
+                <h2 id="teamnameb">Team B</h2>
             </div>
             <div class="points">
-                <button id="btnteamb" class="pointbtn">00</button>
+                <input type="button" value="00" id="btnteamb" class="pointbtn" onclick="add(2)"></input>
             </div>
             <div class="pointsminus">
-                <button id="minusteamb" class="minusbtn">-</button>
+                <input type="button" value="-" id="minusteamb" class="minusbtn" onclick="subtract(2)"></input>
             </div>
         </div>
     </main>

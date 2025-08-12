@@ -1,7 +1,7 @@
 * {
     margin: 0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: darkslategrey;
+    background-color: #222;
     box-sizing: border-box;
 }
 
@@ -17,6 +17,7 @@ body, html, main {height: 100%;}
 }
 
 .teamdisplay {
+    background-color: #444;
     border: 1px solid black;
     flex: 1;
     height: 100%;
@@ -24,6 +25,7 @@ body, html, main {height: 100%;}
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    color: #fff;
 
     h2 {
         font-size: 3rem;
@@ -33,11 +35,13 @@ body, html, main {height: 100%;}
         width: 32rem;
         height: 18rem;
         font-size: 10rem;
+        color: #fff;
     }
 
     .minusbtn {
         font-size: 6rem;
         width: 16rem;
         height: 9rem;
+        color: #fff;
     }
 }
