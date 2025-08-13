@@ -29,12 +29,12 @@ function add(team) {
 }
 
 function subtract(team) {
-    if (team == a) {
+    if (team == 1) {
         pointsa--;
         document.getElementById("btnteama").value = pointsa;
     }
 
-    if (team == b) {
+    if (team == 2) {
         pointsb--;
         document.getElementById("btnteamb").value = pointsb;
     }
