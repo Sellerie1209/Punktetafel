@@ -30,13 +30,16 @@ function add(team) {
 
 function subtract(team) {
     if (team == 1) {
-        pointsa--;
-        document.getElementById("btnteama").value = pointsa;
+        if (pointsa > 0) {
+            pointsa--;
+            document.getElementById("btnteama").value = pointsa;
+        }
     }
-
     if (team == 2) {
-        pointsb--;
-        document.getElementById("btnteamb").value = pointsb;
+            if (pointsa > 0) {
+            pointsb--;
+            document.getElementById("btnteamb").value = pointsb;
+        }
     }
 }
 
