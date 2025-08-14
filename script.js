@@ -36,7 +36,7 @@ function subtract(team) {
         }
     }
     if (team == 2) {
-            if (pointsa > 0) {
+            if (pointsb > 0) {
             pointsb--;
             document.getElementById("btnteamb").value = pointsb;
         }
