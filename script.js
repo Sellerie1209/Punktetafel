@@ -10,7 +10,7 @@ function add(team) {
 
         let difference = pointsa - pointsb;
 
-        if (pointsa >= 15 & difference >= 2) {
+        if (pointsa >= 25 & difference >= 2) {
             win(team)
         }
     }
@@ -21,7 +21,7 @@ function add(team) {
 
         let difference = pointsb - pointsa;
 
-        if (pointsb >= 15 & difference >= 2) {
+        if (pointsb >= 25 & difference >= 2) {
             win(team);
         }
     }
