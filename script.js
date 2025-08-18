@@ -56,14 +56,17 @@ function add(team) {
 }
 
 function subtract(team) {
-    if (team == a) {
-        pointsa--;
-        document.getElementById("btnteama").value = pointsa;
+    if (team == 1) {
+        if (pointsa > 0) {
+            pointsa--;
+            document.getElementById("btnteama").value = pointsa;
+        }
     }
-
-    if (team == b) {
-        pointsb--;
-        document.getElementById("btnteamb").value = pointsb;
+    if (team == 2) {
+            if (pointsb > 0) {
+            pointsb--;
+            document.getElementById("btnteamb").value = pointsb;
+        }
     }
 }
 
