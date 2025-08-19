@@ -56,6 +56,14 @@ body, html, main {height: 100%;}
     }
 }
 
+#teamA {
+    order: 0;
+}
+
+#teamB {
+    order: 1;
+}
+
 .soundcontrol {
   position: fixed;
   top: 89%;

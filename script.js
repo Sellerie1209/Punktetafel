@@ -1,10 +1,15 @@
 let pointsa = 0;
 let pointsb = 0;
+let setsa = 0;
+let setsb = 0;
 let difference = 0;
 let gameend = false;
 let gamemode;
 let winpoints;
 let winsets;
+let teamA = document.getElementById("teamA")
+let teamB = document.getElementById("teamB")
+let flipped = false;
 
 select()
 
@@ -38,7 +43,7 @@ function add(team) {
         let difference = pointsa - pointsb;
 
         if (pointsa >= winpoints & difference >= 2) {
-            win(team)
+            winset(team)
         }
     }
 
@@ -49,7 +54,7 @@ function add(team) {
         let difference = pointsb - pointsa;
 
         if (pointsb >= winpoints & difference >= 2) {
-            win(team);
+            winset(team);
         }
     }
 
@@ -70,21 +75,83 @@ function subtract(team) {
     }
 }
 
-function win(team) {
+function winset(team) {
+    if (team == 1) {
+        switch (winsets) {
+            case 1:
+                gamewon(team);
+                break;
+            case 2:
+            case 3:
+                setsa++;
+                if (setsa == winsets) {
+                    gamewon(team);
+                } else {
+                    order = teamA.style.order;              
+                    if (flipped) {
+                        teamA.style.order = "0";
+                    } else {
+                        teamA.style.order = "2";
+                        flipped = true;
+                    }
+                    roundwon(team)
+                }
+                document.getElementById("teamnamea").textContent = "Team A"
+                document.getElementById("teamnamea").textContent = document.getElementById("teamnamea").textContent + " Sets: " + setsa;
+                break;
+        }
+    }
+
+    if (team == 2) {
+        switch (winsets) {
+            case 1:
+                gamewon(team);
+                break;
+            case 2:
+            case 3:
+                setsb++;
+                if (setsb == winsets) {
+                    gamewon(team);
+                } else {
+                    order = teamA.style.order;              
+                    if (flipped) {
+                        teamA.style.order = "0";
+                        flipped = false;
+                    } else {
+                        teamA.style.order = "2";
+                        flipped = true;
+                    }
+                    roundwon(team)
+                }
+                document.getElementById("teamnameb").textContent = "Team B"
+                document.getElementById("teamnameb").textContent = document.getElementById("teamnameb").textContent + " Sets: " + setsb;
+                console.log(setsb);
+                break;
+        }
+    }
+
+}
+
+function roundwon(team) {
     pointsa = 0;
     pointsb = 0;
     document.getElementById("btnteama").value = pointsa;
     document.getElementById("btnteamb").value = pointsb;
+    gameend = true;
+}
+
+function gamewon(team) {
+    roundwon(team);
     if (team == 1) {
         document.getElementById("teamnamea").textContent = "Team A Won";
         document.getElementById("teamnameb").textContent = "Team B Lost";
-    }
-
-    if (team == 2) {
-        document.getElementById("teamnameb").textContent = "Team B Won";
+    }   else {
         document.getElementById("teamnamea").textContent = "Team A Lost";
+        document.getElementById("teamnameb").textContent = "Team B Won";
     }
-    gameend = true;
+    teamA.style.order = "0";
+    setsa = 0;
+    setsb = 0;
 }
 
 function whisle() {
