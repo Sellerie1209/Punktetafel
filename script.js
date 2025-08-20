@@ -4,12 +4,15 @@ let setsa = 0;
 let setsb = 0;
 let difference = 0;
 let gameend = false;
+let roundend = false;
 let gamemode;
 let winpoints;
 let winsets;
 let teamA = document.getElementById("teamA")
 let teamB = document.getElementById("teamB")
 let flipped = false;
+let setsplayed = 0;
+let palyablesets = 1;
 
 select()
 
@@ -19,18 +22,22 @@ function select() {
         case "25":
             winpoints = 25;
             winsets = 1;
+            palyablesets = 1;
             break;
         case "15":
             winpoints = 15;
             winsets = 1;
+            palyablesets = 1;
             break;
         case "bo5":
             winpoints = 25;
             winsets = 3;
+            palyablesets = 5;
             break;
         case "bo3":
             winpoints = 25;
             winsets = 2;
+            palyablesets = 3;
             break;
     }
 }
@@ -84,20 +91,14 @@ function winset(team) {
             case 2:
             case 3:
                 setsa++;
+                document.getElementById("teamnamea").textContent = "Team A"
+                document.getElementById("teamnamea").textContent = document.getElementById("teamnamea").textContent + " Sets: " + setsa;
                 if (setsa == winsets) {
                     gamewon(team);
                 } else {
-                    order = teamA.style.order;              
-                    if (flipped) {
-                        teamA.style.order = "0";
-                    } else {
-                        teamA.style.order = "2";
-                        flipped = true;
-                    }
+                    swapSides()
                     roundwon(team)
                 }
-                document.getElementById("teamnamea").textContent = "Team A"
-                document.getElementById("teamnamea").textContent = document.getElementById("teamnamea").textContent + " Sets: " + setsa;
                 break;
         }
     }
@@ -110,25 +111,18 @@ function winset(team) {
             case 2:
             case 3:
                 setsb++;
+                document.getElementById("teamnameb").textContent = "Team B"
+                document.getElementById("teamnameb").textContent = document.getElementById("teamnameb").textContent + " Sets: " + setsb;
                 if (setsb == winsets) {
                     gamewon(team);
                 } else {
-                    order = teamA.style.order;              
-                    if (flipped) {
-                        teamA.style.order = "0";
-                        flipped = false;
-                    } else {
-                        teamA.style.order = "2";
-                        flipped = true;
-                    }
+                    swapSides()
                     roundwon(team)
                 }
-                document.getElementById("teamnameb").textContent = "Team B"
-                document.getElementById("teamnameb").textContent = document.getElementById("teamnameb").textContent + " Sets: " + setsb;
-                console.log(setsb);
                 break;
         }
     }
+
 
 }
 
@@ -137,7 +131,12 @@ function roundwon(team) {
     pointsb = 0;
     document.getElementById("btnteama").value = pointsa;
     document.getElementById("btnteamb").value = pointsb;
-    gameend = true;
+
+    setsplayed = setsa + setsb;
+    if (setsplayed == palyablesets - 1) {
+        winpoints = 15;
+    }
+    roundend = true;
 }
 
 function gamewon(team) {
@@ -149,20 +148,29 @@ function gamewon(team) {
         document.getElementById("teamnamea").textContent = "Team A Lost";
         document.getElementById("teamnameb").textContent = "Team B Won";
     }
-    teamA.style.order = "0";
+    swapSides();
+    gameend = true;
     setsa = 0;
     setsb = 0;
+    select();
 }
 
 function whisle() {
     let audio = document.getElementById("sound");
     audio.currentTime = 0;
     audio.play();
+    if (roundend == true) {
+        roundend = false;
+        document.getElementById("teamnamea").textContent = "Team A"
+        document.getElementById("teamnamea").textContent = document.getElementById("teamnamea").textContent + " Sets: " + setsa;
+        document.getElementById("teamnameb").textContent = "Team B"
+        document.getElementById("teamnameb").textContent = document.getElementById("teamnameb").textContent + " Sets: " + setsb;
 
-    if (gameend == true) {
-        gameend = false;
-        document.getElementById("teamnamea").textContent = "Team A";
-        document.getElementById("teamnameb").textContent = "Team B";
+        if (gameend == true) {
+            gameend = false;
+            document.getElementById("teamnamea").textContent = "Team A"
+            document.getElementById("teamnameb").textContent = "Team B"
+        }
     }
 }
 
@@ -178,3 +186,49 @@ function updatePos() {
 updatePos();
 window.addEventListener("resize", updatePos);
 window.addEventListener("scroll", updatePos);
+
+function swapSides() {
+  // Richtung bestimmen
+  if (!flipped) {
+    teamA.style.transform = "translateX(100%)";
+    teamB.style.transform = "translateX(-100%)";
+  } else {
+    teamA.style.transform = "translateX(-100%)";
+    teamB.style.transform = "translateX(100%)";
+  }
+
+  // wenn die Animation fertig ist
+  const onTransitionEnd = () => {
+    teamA.removeEventListener("transitionend", onTransitionEnd);
+
+    // Schritt 1: Reihenfolge wirklich ändern
+    if (flipped) {
+      teamA.style.order = "0";
+      teamB.style.order = "1";
+      flipped = false;
+    } else {
+      teamA.style.order = "2";
+      teamB.style.order = "1";
+      flipped = true;
+    }
+
+    // Schritt 2: damit sie nicht springen → Transform "beibehalten"
+    teamA.style.transition = "none"; 
+    teamB.style.transition = "none"; 
+
+    // Werte aus der vorherigen Translation *stehen lassen*
+    // und dann sofort auf 0 setzen (nächster Frame)
+    requestAnimationFrame(() => {
+      teamA.style.transform = "";
+      teamB.style.transform = "";
+
+      // Transition wieder aktivieren
+      requestAnimationFrame(() => {
+        teamA.style.transition = "transform 0.5s ease";
+        teamB.style.transition = "transform 0.5s ease";
+      });
+    });
+  };
+
+  teamA.addEventListener("transitionend", onTransitionEnd);
+}
