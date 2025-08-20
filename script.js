@@ -232,3 +232,28 @@ function swapSides() {
 
   teamA.addEventListener("transitionend", onTransitionEnd);
 }
+
+document.addEventListener("keydown", function(event) {
+    switch(event.key) {
+        case "a":
+            if (event.altKey || event.ctrlKey) {
+                subtract(1);
+            } else {
+                add(1)
+            }
+            break;
+
+        case "b":
+            if (event.altKey || event.ctrlKey) {
+                subtract(2);
+            } else {
+                add(2)
+            }
+            break;
+
+        case " ":
+        case "Enter":
+            whisle();
+            break;   
+    }
+});
