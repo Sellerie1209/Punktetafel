@@ -90,7 +90,8 @@ body, html, main {height: 100%;}
 #gamemodeselect {
     position: absolute;
     margin: 1rem;
-    width: 8rem;
+    width: auto;
+    min-width: 6rem;
     height: 4rem;
     color: #fff;
     font-size: 1rem;
