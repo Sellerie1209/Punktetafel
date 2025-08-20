@@ -148,15 +148,17 @@ function gamewon(team) {
         document.getElementById("teamnamea").textContent = "Team A Lost";
         document.getElementById("teamnameb").textContent = "Team B Won";
     }
-    swapSides();
+    if (gamemode == "bo5" || gamemode == "bo3") {
+        swapSides();
+    }
     gameend = true;
     setsa = 0;
     setsb = 0;
     select();
 }
 
-function whisle() {
-    let audio = document.getElementById("sound");
+function whisle(id_sound) {
+    let audio = document.getElementById(`${id_sound}`);
     audio.currentTime = 0;
     audio.play();
     if (roundend == true) {
@@ -234,6 +236,11 @@ function swapSides() {
 }
 
 document.addEventListener("keydown", function(event) {
+
+    if (event.key === " " || event.key === "Enter") {
+        event.preventDefault();
+    }
+
     switch(event.key) {
         case "a":
             if (event.altKey || event.ctrlKey) {
@@ -253,7 +260,12 @@ document.addEventListener("keydown", function(event) {
 
         case " ":
         case "Enter":
-            whisle();
-            break;   
+            
+            whisle("sound");
+            break;
+
+        case "p":
+            whisle("pfeifesound");
+            break;
     }
 });
