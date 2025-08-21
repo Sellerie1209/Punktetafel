@@ -158,7 +158,7 @@ function gamewon(team) {
 }
 
 function whisle(id_sound) {
-    let audio = document.getElementById(`${id_sound}`);
+    let audio = document.getElementById(id_sound);
     audio.currentTime = 0;
     audio.play();
     if (roundend == true) {
@@ -264,8 +264,8 @@ document.addEventListener("keydown", function(event) {
             whisle("sound");
             break;
 
-        case "p":
-            whisle("pfeifesound");
+        case "l":
+            whisle("lizzard");
             break;
     }
 });
