@@ -1,271 +1,189 @@
-let pointsa = 0;
-let pointsb = 0;
-let setsa = 0;
-let setsb = 0;
-let difference = 0;
-let gameend = false;
-let roundend = false;
-let gamemode;
-let winpoints;
-let winsets;
-let teamA = document.getElementById("teamA")
-let teamB = document.getElementById("teamB")
+let pointsa = 0, pointsb = 0;
+let setsa = 0, setsb = 0;
 let flipped = false;
+let gameend = false, roundend = false;
+let gamemode, winpoints, winsets, palyablesets = 1;
 let setsplayed = 0;
-let palyablesets = 1;
 
-select()
+const teamA = document.getElementById("teamA");
+const teamB = document.getElementById("teamB");
+let leftTeam = teamA;
 
+const pointhistory = document.getElementById("pointhistory");
+const gamemodeselect = document.getElementById("gamemodeselect");
+
+// Initial Setup
+select();
+updateSelectPosition();
+
+function updateSelectPosition() {
+    leftTeam.appendChild(gamemodeselect);
+    gamemodeselect.style.position = "absolute";
+    gamemodeselect.style.top = "0";
+    gamemodeselect.style.left = "0";
+    gamemodeselect.style.margin = "2rem";
+}
+
+function swapLeftTeam(newLeftTeam) {
+    leftTeam = newLeftTeam;
+    updateSelectPosition();
+}
+
+// Game Mode Setup
 function select() {
-    gamemode = document.getElementById("gamemodeselect").value
+    gamemode = gamemodeselect.value;
     switch (gamemode) {
-        case "25":
-            winpoints = 25;
-            winsets = 1;
-            palyablesets = 1;
-            break;
-        case "15":
-            winpoints = 15;
-            winsets = 1;
-            palyablesets = 1;
-            break;
-        case "bo5":
-            winpoints = 25;
-            winsets = 3;
-            palyablesets = 5;
-            break;
-        case "bo3":
-            winpoints = 25;
-            winsets = 2;
-            palyablesets = 3;
-            break;
+        case "25": winpoints = 25; winsets = 1; palyablesets = 1; break;
+        case "15": winpoints = 15; winsets = 1; palyablesets = 1; break;
+        case "bo5": winpoints = 25; winsets = 3; palyablesets = 5; break;
+        case "bo3": winpoints = 25; winsets = 2; palyablesets = 3; break;
     }
 }
 
+// Score Update
 function add(team) {
-    if (team == 1) {
+    if (team === 1) {
         pointsa++;
         document.getElementById("btnteama").value = pointsa;
-
-        let difference = pointsa - pointsb;
-
-        if (pointsa >= winpoints & difference >= 2) {
-            winset(team)
-        }
-    }
-
-    if (team == 2) {
+        if (pointsa >= winpoints && pointsa - pointsb >= 2) winset(1);
+        else fillhistory();
+    } else {
         pointsb++;
         document.getElementById("btnteamb").value = pointsb;
-
-        let difference = pointsb - pointsa;
-
-        if (pointsb >= winpoints & difference >= 2) {
-            winset(team);
-        }
+        if (pointsb >= winpoints && pointsb - pointsa >= 2) winset(2);
+        else fillhistory();
     }
-
 }
 
 function subtract(team) {
-    if (team == 1) {
-        if (pointsa > 0) {
-            pointsa--;
-            document.getElementById("btnteama").value = pointsa;
-        }
+    if (team === 1 && pointsa > 0) {
+        pointsa--;
+        document.getElementById("btnteama").value = pointsa;
     }
-    if (team == 2) {
-            if (pointsb > 0) {
-            pointsb--;
-            document.getElementById("btnteamb").value = pointsb;
+    if (team === 2 && pointsb > 0) {
+        pointsb--;
+        document.getElementById("btnteamb").value = pointsb;
+    }
+    removehistory();
+}
+
+// Point History
+function fillhistory() {
+    const score = document.createElement("p");
+    score.textContent = scoreboard();
+    pointhistory.prepend(score);
+
+    if (pointhistory.childElementCount > 5) pointhistory.removeChild(pointhistory.lastElementChild);
+
+    Array.from(pointhistory.children).forEach((el, i) => el.style.opacity = 1 - i * 0.2);
+}
+
+function removehistory() {
+    if (pointhistory.firstChild) pointhistory.removeChild(pointhistory.firstChild);
+    Array.from(pointhistory.children).forEach((el, i) => el.style.opacity = 1 - i * 0.1);
+}
+
+function scoreboard() {
+    return flipped ? `${pointsb}:${pointsa}` : `${pointsa}:${pointsb}`;
+}
+
+// Set & Game Win
+function winset(team) {
+    if (team === 1) {
+        if (winsets === 1) gamewon(1);
+        else {
+            setsa++;
+            updateTeamName(1);
+            setsa === winsets ? gamewon(1) : swapSidesAndRound(1);
+        }
+    } else {
+        if (winsets === 1) gamewon(2);
+        else {
+            setsb++;
+            updateTeamName(2);
+            setsb === winsets ? gamewon(2) : swapSidesAndRound(2);
         }
     }
 }
 
-function winset(team) {
-    if (team == 1) {
-        switch (winsets) {
-            case 1:
-                gamewon(team);
-                break;
-            case 2:
-            case 3:
-                setsa++;
-                document.getElementById("teamnamea").textContent = "Team A"
-                document.getElementById("teamnamea").textContent = document.getElementById("teamnamea").textContent + " Sets: " + setsa;
-                if (setsa == winsets) {
-                    gamewon(team);
-                } else {
-                    swapSides()
-                    roundwon(team)
-                }
-                break;
-        }
-    }
+function updateTeamName(team) {
+    if (team === 1) document.getElementById("teamnamea").textContent = `Team A Sets: ${setsa}`;
+    else document.getElementById("teamnameb").textContent = `Team B Sets: ${setsb}`;
+}
 
-    if (team == 2) {
-        switch (winsets) {
-            case 1:
-                gamewon(team);
-                break;
-            case 2:
-            case 3:
-                setsb++;
-                document.getElementById("teamnameb").textContent = "Team B"
-                document.getElementById("teamnameb").textContent = document.getElementById("teamnameb").textContent + " Sets: " + setsb;
-                if (setsb == winsets) {
-                    gamewon(team);
-                } else {
-                    swapSides()
-                    roundwon(team)
-                }
-                break;
-        }
-    }
-
-
+function swapSidesAndRound(team) {
+    swapSides();
+    roundwon(team);
 }
 
 function roundwon(team) {
-    pointsa = 0;
-    pointsb = 0;
-    document.getElementById("btnteama").value = pointsa;
-    document.getElementById("btnteamb").value = pointsb;
+    pointsa = 0; pointsb = 0;
+    document.getElementById("btnteama").value = 0;
+    document.getElementById("btnteamb").value = 0;
 
     setsplayed = setsa + setsb;
-    if (setsplayed == palyablesets - 1) {
-        winpoints = 15;
-    }
+    if (setsplayed === palyablesets - 1) winpoints = 15;
+
     roundend = true;
+    pointhistory.replaceChildren();
 }
 
 function gamewon(team) {
     roundwon(team);
-    if (team == 1) {
-        document.getElementById("teamnamea").textContent = "Team A Won";
-        document.getElementById("teamnameb").textContent = "Team B Lost";
-    }   else {
-        document.getElementById("teamnamea").textContent = "Team A Lost";
-        document.getElementById("teamnameb").textContent = "Team B Won";
-    }
-    if (gamemode == "bo5" || gamemode == "bo3") {
-        swapSides();
-    }
+    document.getElementById("teamnamea").textContent = team === 1 ? "Team A Won" : "Team A Lost";
+    document.getElementById("teamnameb").textContent = team === 2 ? "Team B Won" : "Team B Lost";
+
+    if (["bo5","bo3"].includes(gamemode) && flipped) swapSides();
     gameend = true;
-    setsa = 0;
-    setsb = 0;
+    setsa = 0; setsb = 0;
     select();
 }
 
+// Sound
 function whisle(id_sound) {
-    let audio = document.getElementById(id_sound);
+    const audio = document.getElementById(id_sound);
     audio.currentTime = 0;
     audio.play();
-    if (roundend == true) {
-        roundend = false;
-        document.getElementById("teamnamea").textContent = "Team A"
-        document.getElementById("teamnamea").textContent = document.getElementById("teamnamea").textContent + " Sets: " + setsa;
-        document.getElementById("teamnameb").textContent = "Team B"
-        document.getElementById("teamnameb").textContent = document.getElementById("teamnameb").textContent + " Sets: " + setsb;
 
-        if (gameend == true) {
+    if (roundend) {
+        roundend = false;
+        document.getElementById("teamnamea").textContent = `Team A Sets: ${setsa}`;
+        document.getElementById("teamnameb").textContent = `Team B Sets: ${setsb}`;
+
+        if (gameend) {
             gameend = false;
-            document.getElementById("teamnamea").textContent = "Team A"
-            document.getElementById("teamnameb").textContent = "Team B"
+            document.getElementById("teamnamea").textContent = "Team A";
+            document.getElementById("teamnameb").textContent = "Team B";
         }
     }
 }
 
-const innen = document.getElementById("teamA");
-const gamemodeselect = document.getElementById("gamemodeselect");
-
-function updatePos() {
-      const rect = innen.getBoundingClientRect();
-      gamemodeselect.style.left = rect.left + window.scrollX + "px";
-      gamemodeselect.style.top = rect.top + window.scrollY + "px";
-    }
-
-updatePos();
-window.addEventListener("resize", updatePos);
-window.addEventListener("scroll", updatePos);
-
+// Swap Sides
 function swapSides() {
-  // Richtung bestimmen
-  if (!flipped) {
-    teamA.style.transform = "translateX(100%)";
-    teamB.style.transform = "translateX(-100%)";
-  } else {
-    teamA.style.transform = "translateX(-100%)";
-    teamB.style.transform = "translateX(100%)";
-  }
+    const main = document.querySelector(".main");
+    main.classList.toggle("flipped");
 
-  // wenn die Animation fertig ist
-  const onTransitionEnd = () => {
-    teamA.removeEventListener("transitionend", onTransitionEnd);
-
-    // Schritt 1: Reihenfolge wirklich ändern
-    if (flipped) {
-      teamA.style.order = "0";
-      teamB.style.order = "1";
-      flipped = false;
+    if (!flipped) {
+        swapLeftTeam(teamB);
+        teamA.classList.replace("left","right");
+        teamB.classList.replace("right","left");
+        flipped = true;
     } else {
-      teamA.style.order = "2";
-      teamB.style.order = "1";
-      flipped = true;
+        swapLeftTeam(teamA);
+        teamA.classList.replace("right","left");
+        teamB.classList.replace("left","right");
+        flipped = false;
     }
-
-    // Schritt 2: damit sie nicht springen → Transform "beibehalten"
-    teamA.style.transition = "none"; 
-    teamB.style.transition = "none"; 
-
-    // Werte aus der vorherigen Translation *stehen lassen*
-    // und dann sofort auf 0 setzen (nächster Frame)
-    requestAnimationFrame(() => {
-      teamA.style.transform = "";
-      teamB.style.transform = "";
-
-      // Transition wieder aktivieren
-      requestAnimationFrame(() => {
-        teamA.style.transition = "transform 0.5s ease";
-        teamB.style.transition = "transform 0.5s ease";
-      });
-    });
-  };
-
-  teamA.addEventListener("transitionend", onTransitionEnd);
 }
 
-document.addEventListener("keydown", function(event) {
-
-    if (event.key === " " || event.key === "Enter") {
-        event.preventDefault();
-    }
+// Keyboard Shortcuts
+document.addEventListener("keydown", (event) => {
+    if (event.key === " " || event.key === "Enter") event.preventDefault();
 
     switch(event.key) {
-        case "a":
-            if (event.altKey || event.ctrlKey) {
-                subtract(1);
-            } else {
-                add(1)
-            }
-            break;
-
-        case "b":
-            if (event.altKey || event.ctrlKey) {
-                subtract(2);
-            } else {
-                add(2)
-            }
-            break;
-
-        case " ":
-        case "Enter":
-            
-            whisle("sound");
-            break;
-
-        case "l":
-            whisle("lizzard");
-            break;
+        case "a": event.altKey || event.ctrlKey ? subtract(1) : add(1); break;
+        case "b": event.altKey || event.ctrlKey ? subtract(2) : add(2); break;
+        case " ": case "Enter": whisle("sound"); break;
+        case "l": whisle("lizzard"); break;
     }
 });
