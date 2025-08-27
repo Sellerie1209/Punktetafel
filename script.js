@@ -184,6 +184,6 @@ document.addEventListener("keydown", (event) => {
         case "a": event.altKey || event.ctrlKey ? subtract(1) : add(1); break;
         case "b": event.altKey || event.ctrlKey ? subtract(2) : add(2); break;
         case " ": case "Enter": whisle("sound"); break;
-        case "l": whisle("lizzard"); break;
+        case "l": whisle("lizard"); break;
     }
 });

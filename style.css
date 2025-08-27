@@ -83,8 +83,8 @@ body, html, main {
     border-right: none;
 }
 
-/* Sound Control */
-.soundcontrol {
+/* Whisle Button */
+.whisleBtn {
     position: absolute;
     top: 89%;
     left: 50%;
@@ -107,7 +107,7 @@ body, html, main {
 }
 
 /* Game Mode Selector */
-#gamemodeselect {
+.gamemodeselect {
     position: absolute;
     top: 0;
     left: 0;
@@ -132,4 +132,53 @@ body, html, main {
 .pointhistory p {
     margin: 0.5rem;
     border: none;
+}
+
+/* Soundboard */
+.soundboardcontainer {
+    padding: 1rem;
+    padding-top: 0;
+    background-color: #000814;
+}
+
+.soundboard {
+    background-color: #001d3d;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+
+    .soundbtn {
+        width: 25vh;
+        height: 25vh;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #003566;
+    }
+
+    .soundbtn:hover {
+        scale: 1.1;
+        border: 3px #000 solid;
+    }
+
+    .soundicon {
+        width: 16.67vh;
+        height: 16.67vh;
+        fill: #ffd60a;
+        stroke: #000;
+        stroke-width: 3;
+        background-color: #003566;
+        border: none;
+
+    }
+
+    .soundtext {
+        background-color: #003566;
+        border: none;
+        font-size: 3rem;
+        color: #ffd60a;
+    }
 }

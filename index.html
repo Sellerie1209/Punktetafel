@@ -36,8 +36,46 @@
         </div>
     </main>
 
+    <div class="soundboardcontainer">
+        <div id="soundboard" class="soundboard">
+            <button class="soundbtn" onclick="whisle('sound')">
+                <svg class="soundicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                    <path d="M440-200q-100 0-170-70t-70-170q0-11 1-22t3-22q-5 2-12 3t-12 1q-42 0-71-29t-29-71q0-42 27.5-71t69.5-29q33 0 59.5 18.5T274-614q33-30 75.5-48t90.5-18h440v160H680v80q0 100-70 170t-170 70ZM180-540q17 0 28.5-11.5T220-580q0-17-11.5-28.5T180-620q-17 0-28.5 11.5T140-580q0 17 11.5 28.5T180-540Zm260 240q58 0 99-41t41-99q0-58-41-99t-99-41q-58 0-99 41t-41 99q0 58 41 99t99 41Zm0-60q33 0 56.5-23.5T520-440q0-33-23.5-56.5T440-520q-33 0-56.5 23.5T360-440q0 33 23.5 56.5T440-360Zm0-80Z"/>
+                </svg>
+            </button>
+            <button class="soundbtn" onclick="whisle('lizard')">
+                <p class="soundtext">Lizard</p>
+            </button>
+            <button class="soundbtn" onclick="whisle('amongus')">
+                <svg class="soundicon" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill-rule="evenodd" d="M55.087 40H83c13.807 0 25 11.193 25 25S96.807 90 83 90H52c-.335 0-.668-.007-1-.02V158a6 6 0 0 0 6 6h9a6 6 0 0 0 6-6v-18a6 6 0 0 1 6-6h24a6 6 0 0 1 6 6v18a6 6 0 0 0 6 6h9a6 6 0 0 0 6-6V54c0-14.36-11.641-26-26-26H77c-9.205 0-17.292 4.783-21.913 12ZM39 86.358C31.804 81.97 27 74.046 27 65c0-9.746 5.576-18.189 13.712-22.313C45.528 27.225 59.952 16 77 16h26c16.043 0 29.764 9.942 35.338 24H147c9.941 0 18 8.059 18 18v65c0 9.941-8.059 18-18 18h-6v17c0 9.941-8.059 18-18 18h-9c-9.941 0-18-8.059-18-18v-12H84v12c0 9.941-8.059 18-18 18h-9c-9.941 0-18-8.059-18-18V86.358ZM141 129h6a6 6 0 0 0 6-6V58a6 6 0 0 0-6-6h-6.052c.035.662.052 1.33.052 2v75ZM52 52c-7.18 0-13 5.82-13 13s5.82 13 13 13h31c7.18 0 13-5.82 13-13s-5.82-13-13-13H52Z" clip-rule="evenodd"/></svg>
+            </button>
+            <button class="soundbtn" onclick="whisle('nuke')">
+                <svg class="soundicon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M177.746 465.133a111.134 111.134 0 0 0 24.98 10.73 123.6 123.6 0 0 1-165.845-169.69c2.617 9.252 7.46 19.842 14.427 31.56 13.57 22.786 35.29 49.784 59.59 74.084 23.174 23.175 46.923 42.115 66.85 53.316zM317.31 21.616l-66.85 66.85 173.69 173.69 66.85-66.85zM259.29 162.62l89.473 89.474 44.895 5.958L254.095 118.49zm81.522 107.348c-15.575 34.527-65.865 141.216-108.848 184.222-37.728 37.73-206.412-143.08-174.746-174.746 42.772-42.772 149.977-91.478 185.478-106.866l97.342 97.343zM203.008 355.1a33.014 33.014 0 0 1-31.794-8.55l-24.77 24.77a68.022 68.022 0 0 0 65.56 17.663zm-40.24-40.472a33.014 33.014 0 0 1 23.457-23.34l-8.983-33.893a68.022 68.022 0 0 0-48.284 48.167zm41.86-1.43a14.238 14.238 0 1 0 0 20.136 14.238 14.238 0 0 0 0-20.196zm38.044-38.047l-24.77 24.77a33.014 33.014 0 0 1 8.503 31.96l33.847 9.16a68.022 68.022 0 0 0-17.592-65.947z"/></svg>
+            </button>
+            <!--<button class="soundbtn" onclick="whisle()">
+                Test5
+            </button>
+            ,
+            <button class="soundbtn" onclick="whisle()">
+                Test6
+            </button>
+            <button class="soundbtn" onclick="whisle()">
+                Test7
+            </button>
+            <button class="soundbtn" onclick="whisle()">
+                Tes8
+            </button>
+            <button class="soundbtn" onclick="whisle()">
+                Test9
+            </button>
+            <button class="soundbtn" onclick="whisle()">
+                Test10
+            </button>-->
+    </div>
+    </div>
+
     <!-- Sound Button -->
-    <button id="whisleBtn" class="soundcontrol" onclick="whisle('sound')">
+    <button id="whisleBtn" class="whisleBtn" onclick="whisle('sound')">
         <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="10vh" viewBox="0 -960 960 960" width="10vh" fill="#e8eaed">
             <path d="M440-200q-100 0-170-70t-70-170q0-11 1-22t3-22q-5 2-12 3t-12 1q-42 0-71-29t-29-71q0-42 27.5-71t69.5-29q33 0 59.5 18.5T274-614q33-30 75.5-48t90.5-18h440v160H680v80q0 100-70 170t-170 70ZM180-540q17 0 28.5-11.5T220-580q0-17-11.5-28.5T180-620q-17 0-28.5 11.5T140-580q0 17 11.5 28.5T180-540Zm260 240q58 0 99-41t41-99q0-58-41-99t-99-41q-58 0-99 41t-41 99q0 58 41 99t99 41Zm0-60q33 0 56.5-23.5T520-440q0-33-23.5-56.5T440-520q-33 0-56.5 23.5T360-440q0 33 23.5 56.5T440-360Zm0-80Z"/>
         </svg>
@@ -45,10 +83,12 @@
 
     <!-- Audio Files -->
     <audio id="sound" src="whisle.mp3" preload="auto"></audio>
-    <audio id="lizzard" src="lizzard.mp3" preload="auto"></audio>
+    <audio id="lizard" src="lizard.mp3" preload="auto"></audio>
+    <audio src="amongus.mp3" id="amongus" preload="auto"></audio>
+    <audio src="nuke.mp3" id="nuke" preload="auto"></audio>
 
     <!-- Game Mode Selector -->
-    <select name="gamemode" id="gamemodeselect" onchange="select()">
+    <select name="gamemode" id="gamemodeselect" class="gamemodeselect" onchange="select()">
         <option value="25">Spiel bis 25</option>
         <option value="15">Spiel bis 15</option>
         <option value="bo5">Best of 5</option>
