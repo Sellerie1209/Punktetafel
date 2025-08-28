@@ -176,14 +176,32 @@ function swapSides() {
     }
 }
 
+let pressed = new Set();
+
 // Keyboard Shortcuts
 document.addEventListener("keydown", (event) => {
     if (event.key === " " || event.key === "Enter") event.preventDefault();
+
+    pressed.add(event.key);
 
     switch(event.key) {
         case "a": event.altKey || event.ctrlKey ? subtract(1) : add(1); break;
         case "b": event.altKey || event.ctrlKey ? subtract(2) : add(2); break;
         case " ": case "Enter": whisle("sound"); break;
-        case "l": whisle("lizard"); break;
+        case "l": whisle("lizard"); break;      
     }
+
+    if (pressed.has("p") && pressed.has("1")) {
+        whisle('pfeife1');
+    }
+    if (pressed.has("p") && pressed.has("2")) {
+        whisle('pfeife2');
+    }
+    if (pressed.has("p") && pressed.has("3")) {
+        whisle('pfeife3');
+    }
+});
+
+document.addEventListener("keyup", (event) => {
+    pressed.delete(event.key);
 });
