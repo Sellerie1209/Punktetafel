@@ -178,7 +178,8 @@ body, html, main {
     .soundtext {
         background-color: #003566;
         border: none;
-        font-size: 3rem;
+        font-size: 2rem;
         color: #ffd60a;
+        border-radius: 50%;
     }
 }

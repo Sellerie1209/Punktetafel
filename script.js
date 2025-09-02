@@ -44,12 +44,12 @@ function select() {
 function add(team) {
     if (team === 1) {
         pointsa++;
-        document.getElementById("btnteama").value = pointsa;
+        document.getElementById("btnteama").textContent = pointsa;
         if (pointsa >= winpoints && pointsa - pointsb >= 2) winset(1);
         else fillhistory();
     } else {
         pointsb++;
-        document.getElementById("btnteamb").value = pointsb;
+        document.getElementById("btnteamb").textContent = pointsb;
         if (pointsb >= winpoints && pointsb - pointsa >= 2) winset(2);
         else fillhistory();
     }
